@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA&#45;142997649&#45;1"></script> -->
+    <!-- <script> -->
+    <!--   window.dataLayer = window.dataLayer || []; -->
+    <!--   function gtag(){dataLayer.push(arguments);} -->
+    <!--   gtag('js', new Date()); -->
+    <!--  -->
+    <!--   gtag('config', 'UA&#45;142997649&#45;1'); -->
+    <!-- </script> -->
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sentency</title>
+    <meta name="description" content="並び替え問題で英文を学ぶアプリです。">
+    <script>
+      // if ('serviceWorker' in navigator) {
+      //   window.addEventListener('load', function() {
+      //     navigator.serviceWorker.register('/sentency/sw.js');
+      //   });
+      // }
+    </script>
+    <link rel="apple-touch-icon" sizes="180x180" href="/sentency/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/sentency/favicon/favicon-48x48.png">
+    <link rel="manifest" href="/sentency/favicon/site.webmanifest">
+    <link rel="mask-icon" href="/sentency/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <style>
+      @font-face {
+        font-family: textar-light;
+        src: local('Textar'),
+          url('https://marmooo.github.io/fonts/textar-light.woff2') format('woff2');
+        font-display: swap;
+      }
+      .choice { touch-action:manipulation; }
+      html,body { height:100%; }
+      pre.aa {
+        font-size: 1rem;
+        display: inline-block;
+        overflow: hidden;
+        text-align: left;
+        font-family: textar-light;
+        line-height: 1.1;
+        white-space: pre;
+        word-wrap: normal;
+      }
+      #counter {
+        font-size:10rem; width:12rem; height:12rem; line-height:12rem; border-radius: 50%;
+        background:tomato; margin:auto; }
+      #aaOuter { background:transparent; display:flex; align-items:center; justify-content:center; }
+      #aa { position:relative; top:0; left:0; margin:auto; }
+      #typePanel { word-wrap: break-word; }
+      html[data-theme="dark"] { filter: invert(1) hue-rotate(180deg); }
+      @-moz-document url-prefix() { html[data-theme="dark"] { background-color:black; } }
+    </style>
+    <script data-ad-client="ca-pub-6459713332128733" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  </head>
+  <body>
+    <header id="header">
+      <nav class="navbar navbar-expand navbar-light">
+        <div class="container">
+          <a class="navbar-brand" href="/sentency/">Sentency</a>
+          <div class="navbar-nav">
+            <select id="gradeOption" class="form-select form-select-sm" aria-label="コース">
+              <option>小3</option>
+              <option>小4</option>
+              <option>小5</option>
+              <option>小6</option>
+              <option>中1</option>
+              <option>中2</option>
+              <option selected>中3</option>
+              <option>高1</option>
+              <option>高2</option>
+              <option>高3</option>
+              <option>大学生</option>
+              <option>社会人</option>
+            </select>
+            <button title="音楽を再生" onclick="toggleBGM()" class="btn p-0 ms-1">
+              <svg id="bgmOn" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+              <svg id="bgmOff" class="d-none" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M4.27 3L3 4.27l9 9v.28c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4v-1.73L19.73 21 21 19.73 4.27 3zM14 7h4V3h-6v5.18l2 2z"/></svg>
+            </button>
+            <button title="ダークモード切替" onclick="toggleDarkMode()" class="fs-4 btn p-0 ms-1">🌓</button>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main id="container" class="container">
+      <noscript>
+        <div class="alert alert-warning text-center">JavaScript を ON にしてください</div>
+      </noscript>
+      <div id="infoPanel">
+        <div class="row text-center">
+          <div class="col-sm-4 text-start">
+            <p>並び替え問題で英文を学ぶアプリです。</p>
+            <pre class="aa">　　.彡⌒ ミ
+　　(´･ω･ ）　3分でどれくらい解けるかな？
+　 o.　　　,っ
+　　Ｏ＿Ｏﾉ
+            </pre>
+          </div>
+          <div class="col-sm-8">
+            <div class="alert alert-info">
+              <div class="h5">
+                <label><ruby>時間<rp>(</rp><rt>じかん</rt><rp>)</rp></ruby>:</label><span id="time" class="ms-1">180秒 / 180秒</span>
+                <button id="mode" class="ms-3 btn btn-secondary btn-sm">EASY</button>
+              </div>
+              <div>
+                <button id="startButton" class="btn btn-lg btn-primary">スタート</button>
+                <button id="answerButton" class="btn btn-lg btn-secondary">こたえ</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <div id="countPanel" hidden>
+          <div id="counter"></div>
+          <pre class="aa">　　___ へ __ へ ___ へ
+　へ　(∴)　(∴)　(∴)　へ
+{(∴) ,ヘ　　 へ　　 __＿＿ 彡⌒ミ
+|＼　(∴)　 (∴)　,/|　　　　(・ω・｀)
+| ﾐ　ー--------　 | ∋―と　　　)
+＼ ﾐ.三三三三三|/|＿＿__ し--Ｊ
+　 ＼＿＿＿＿＿|/
+          </pre>
+        </div>
+        <div id="scorePanel" class="text-center pb-3" hidden>
+          <table class="table table-striped w-auto mx-auto">
+            <tbody id="result"></tbody>
+          </table>
+          <div class="text-center py-3">
+            <h2><span id="score"></span> / <span id="count"></span></h2>
+          </div>
+        </div>
+        <div id="playPanel">
+          <div id="typePanel">
+            <div class="alert alert-info h2">
+              <div>
+                <span id="japanese">並べ替え問題を遊ぼう！
+                </span>
+                <button id="voice" class="btn p-0" title="音声読み上げ">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentcolor" class="bi bi-volume-up-fill" viewBox="0 0 16 16"><path d="M11.536 14.01A8.473 8.473.0 0 0 14.026 8a8.473 8.473.0 0 0-2.49-6.01l-.708.707A7.476 7.476.0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"></path><path d="M10.121 12.596A6.48 6.48.0 0 0 12.025 8a6.48 6.48.0 0 0-1.904-4.596l-.707.707A5.483 5.483.0 0 1 11.025 8a5.483 5.483.0 0 1-1.61 3.89l.706.706z"></path><path d="M8.707 11.182A4.486 4.486.0 0 0 10.025 8a4.486 4.486.0 0 0-1.318-3.182L8 5.525A3.489 3.489.0 0 1 9.025 8 3.49 3.49.0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5.0 0 1 7 4v8a.5.5.0 0 1-.812.39L3.825 10.5H1.5A.5.5.0 0 1 1 10V6a.5.5.0 0 1 .5-.5h2.325l2.363-1.89a.5.5.0 0 1 .529-.06z"></path></svg>
+                </button>
+              </div>
+              <div id="answer" class="pt-3 d-none">Let's play sorting problems!</div>
+              <div id="roma" class="pt-3">Let's play sorting problems!</div>
+              <div id="choices" class="pt-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="pt-4 alert text-center">
+      <div>辞書 - <a href="https://github.com/marmooo/mGSL">mGSL</a>
+        / <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> by
+        <a href="https://github.com/marmooo">marmooo</a>
+      </div>
+      <div>英文 - <a href="http://nlp.ist.i.kyoto-u.ac.jp/index.php?日英中基本文データ">日英中基本文データ</a>
+        / <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
+      </div>
+      <div class="pt-3">
+        <a class="px-1" href="/">Home</a>
+        <a class="px-1" href="/terms/">Terms</a>
+        <a class="px-1" href="https://github.com/marmooo/sentency">Contact</a>
+      </div>
+      <div class="text-muted">&copy; <a href="https://github.com/marmooo">marmooo</a>
+      </div>
+    </footer>
+    <script src="index.js"></script>
+  </body>
+</html>
