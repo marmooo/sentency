@@ -516,6 +516,7 @@ function scoring() {
 
 document.getElementById('answerButton').onclick = function() {
   answer.classList.remove('d-none');
+  mistaken = true;
 }
 document.getElementById('voice').onclick = function() {
   loopVoice(answer.textContent, 1);

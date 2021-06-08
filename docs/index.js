@@ -43,5 +43,5 @@ function startTypeTimer(){var timeNode=document.getElementById('time');typeTimer
 function downTime(n){const timeNode=document.getElementById('time');const arr=timeNode.innerText.split('秒 /');const t=parseInt(arr[0]);const downedTime=t-n;if(downedTime<0){timeNode.innerText='0秒 /'+arr[1];}else{timeNode.innerText=downedTime+'秒 /'+arr[1];}}
 function initTime(){document.getElementById('time').innerText=gameTime+'秒 / '+gameTime+'秒';}
 function scoring(){document.getElementById('score').innerText=problemCount-errorCount;document.getElementById('count').innerText=problemCount;}
-document.getElementById('answerButton').onclick=function(){answer.classList.remove('d-none');}
+document.getElementById('answerButton').onclick=function(){answer.classList.remove('d-none');mistaken=true;}
 document.getElementById('voice').onclick=function(){loopVoice(answer.textContent,1);};startButton.addEventListener('click',startGame);gradeOption.addEventListener('change',function(){initTime();clearInterval(typeTimer);});setChoices(romaNode.textContent,choices);mode.onclick=function(){mode.textContent=(mode.textContent=='EASY')?'HARD':'EASY';};document.addEventListener('click',unlockAudio,{once:true,useCapture:true});
