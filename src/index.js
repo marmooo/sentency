@@ -212,7 +212,7 @@ function replay() {
   initTime();
   loadProblems();
   countdown();
-  problemCount = errorCount = 0;
+  wordsCount = problemCount = errorCount = 0;
   countPanel.hidden = false;
   scorePanel.hidden = true;
   while(resultNode.firstChild) {

@@ -16,7 +16,7 @@ function appendWord(currNode,word){const span=document.createElement('span');spa
 function typeNormal(currNode){currNode.style.visibility='visible';playAudio(keyboardAudio);currNode.style.color='silver';normalCount+=1;}
 function nextProblem(){playAudio(correctAudio);wordsCount=0;problemCount+=1;if(mistaken){errorCount+=1;}else{resultNode.lastChild.classList.remove('table-danger');}
 mistaken=false;selectable();}
-function replay(){clearInterval(typeTimer);initTime();loadProblems();countdown();problemCount=errorCount=0;countPanel.hidden=false;scorePanel.hidden=true;while(resultNode.firstChild){resultNode.removeChild(resultNode.firstChild);}}
+function replay(){clearInterval(typeTimer);initTime();loadProblems();countdown();wordsCount=problemCount=errorCount=0;countPanel.hidden=false;scorePanel.hidden=true;while(resultNode.firstChild){resultNode.removeChild(resultNode.firstChild);}}
 function calcAAOuterSize(){var headerHeight=document.getElementById('header').offsetHeight;var typePanelHeight=document.getElementById('typePanel').offsetHeight;return document.documentElement.clientHeight-headerHeight-infoPanel.offsetHeight-typePanelHeight;}
 function resizeFontSize(node){function getTextWidth(text,font){var context=tmpCanvas.getContext("2d");context.font=font;var metrics=context.measureText(text);return metrics.width;}
 function getTextRect(text,fontSize,font,lineHeight){var lines=text.split('\n');var maxWidth=0;var fontConfig=fontSize+'px '+font;for(var i=0;i<lines.length;i++){var width=getTextWidth(lines[i],fontConfig);if(maxWidth<width){maxWidth=width;}}
