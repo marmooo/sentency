@@ -1,13 +1,13 @@
-var CACHE_NAME = '2021-06-11 19:10';
+var CACHE_NAME = '2021-06-18 19:40';
 var urlsToCache = [
-  '/kanji-typing/',
-  '/kanji-typing/index.js',
-  '/kanji-typing/bgm.mp3',
-  '/kanji-typing/cat.mp3',
-  '/kanji-typing/correct.mp3',
-  '/kanji-typing/end.mp3',
-  '/kanji-typing/index.js',
-  '/kanji-typing/keyboard.mp3',
+  '/sentency/',
+  '/sentency/index.js',
+  '/sentency/bgm.mp3',
+  '/sentency/cat.mp3',
+  '/sentency/correct.mp3',
+  '/sentency/end.mp3',
+  '/sentency/index.js',
+  '/sentency/keyboard.mp3',
   'https://marmooo.github.io/fonts/textar-light.woff2',
   'https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css',
 ];
