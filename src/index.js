@@ -442,6 +442,7 @@ function countdown() {
   countPanel.hidden = false;
   scorePanel.hidden = true;
   counter.innerText = 3;
+  startButton.removeEventListener('click', replay);
   var timer = setInterval(function(){
     var counter = document.getElementById('counter');
     var colors = ['skyblue', 'greenyellow', 'violet', 'tomato'];
@@ -459,6 +460,7 @@ function countdown() {
       if (localStorage.getItem('bgm') == 1) {
         bgm.play();
       }
+      startButton.addEventListener('click', replay);
     }
   }, 1000);
 }
