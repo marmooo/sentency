@@ -1,4 +1,4 @@
-var CACHE_NAME = '2021-06-18 20:05';
+var CACHE_NAME = '2021-06-24 07:06';
 var urlsToCache = [
   '/sentency/',
   '/sentency/index.js',
@@ -9,7 +9,7 @@ var urlsToCache = [
   '/sentency/index.js',
   '/sentency/keyboard.mp3',
   'https://marmooo.github.io/fonts/textar-light.woff2',
-  'https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css',
+  'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css',
 ];
 
 self.addEventListener('install', function(event) {
