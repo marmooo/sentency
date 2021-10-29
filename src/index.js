@@ -353,15 +353,15 @@ function countdown() {
   playPanel.classList.add("d-none");
   countPanel.hidden = false;
   scorePanel.hidden = true;
-  counter.innerText = 3;
+  counter.textContent = 3;
   startButton.removeEventListener("click", replay);
   const timer = setInterval(function () {
     const counter = document.getElementById("counter");
     const colors = ["skyblue", "greenyellow", "violet", "tomato"];
-    if (parseInt(counter.innerText) > 1) {
-      const t = parseInt(counter.innerText) - 1;
+    if (parseInt(counter.textContent) > 1) {
+      const t = parseInt(counter.textContent) - 1;
       counter.style.backgroundColor = colors[t];
-      counter.innerText = t;
+      counter.textContent = t;
     } else {
       clearInterval(timer);
       countPanel.hidden = true;
@@ -389,10 +389,10 @@ function startGame() {
 function startTypeTimer() {
   const timeNode = document.getElementById("time");
   typeTimer = setInterval(function () {
-    const arr = timeNode.innerText.split("秒 /");
+    const arr = timeNode.textContent.split("秒 /");
     const t = parseInt(arr[0]);
     if (t > 0) {
-      timeNode.innerText = (t - 1) + "秒 /" + arr[1];
+      timeNode.textContent = (t - 1) + "秒 /" + arr[1];
     } else {
       clearInterval(typeTimer);
       bgm.pause();
@@ -406,13 +406,13 @@ function startTypeTimer() {
 }
 
 function initTime() {
-  document.getElementById("time").innerText = gameTime + "秒 / " + gameTime +
+  document.getElementById("time").textContent = gameTime + "秒 / " + gameTime +
     "秒";
 }
 
 function scoring() {
-  document.getElementById("score").innerText = problemCount - errorCount;
-  document.getElementById("count").innerText = problemCount;
+  document.getElementById("score").textContent = problemCount - errorCount;
+  document.getElementById("count").textContent = problemCount;
 }
 
 document.getElementById("toggleDarkMode").onclick = toggleDarkMode;
