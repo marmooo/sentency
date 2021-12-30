@@ -313,7 +313,7 @@ function setRoma(roma, romaNode) {
     span.onclick = selectableWordClickEvent;
     span.textContent = "　";
     romaNode.appendChild(span);
-    if (word.match(/[0-9a-zA-Z]+[,.!?]/)) {
+    if (/[0-9a-zA-Z]+[,.!?]/.test(word)) {
       const symbol = word[word.length - 1];
       const text = document.createTextNode(symbol);
       romaNode.appendChild(text);
