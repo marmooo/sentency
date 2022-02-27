@@ -139,7 +139,7 @@ function loopVoice(text, n) {
 }
 
 function loadProblems() {
-  const grade = gradeOption.selectedIndex + 2;
+  const grade = gradeOption.selectedIndex + 3;
   if (grade > 0) {
     fetch("data/" + mode.textContent.toLowerCase() + "/" + grade + ".tsv").then(
       function (response) {
