@@ -141,16 +141,14 @@ function loopVoice(text, n) {
 function loadProblems() {
   const grade = gradeOption.selectedIndex + 3;
   if (grade > 0) {
-    fetch("data/" + mode.textContent.toLowerCase() + "/" + grade + ".tsv").then(
-      function (response) {
-        return response.text();
-      },
-    ).then(function (tsv) {
-      problems = tsv.trim().split("\n").map((line) => {
-        const [en, jaStr] = line.split("\t");
-        const ja = jaStr.split("|").slice(0, 3).join("\n");
-        return { en: en, ja: ja };
-      });
+    fetch("data/" + mode.textContent.toLowerCase() + "/" + grade + ".tsv")
+      .then((response) => response.text())
+      .then((tsv) => {
+        problems = tsv.trim().split("\n").map((line) => {
+          const [en, jaStr] = line.split("\t");
+          const ja = jaStr.split("|").slice(0, 3).join("\n");
+          return { en: en, ja: ja };
+        });
     }).catch(function (err) {
       console.error(err);
     });
