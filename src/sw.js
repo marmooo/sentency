@@ -1,4 +1,4 @@
-var CACHE_NAME = '2022-03-15 13:20';
+var CACHE_NAME = '2022-03-15 13:35';
 var urlsToCache = [
   "/sentency/",
   "/sentency/index.js",
