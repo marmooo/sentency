@@ -1,4 +1,4 @@
-var CACHE_NAME = '2022-04-01 06:30';
+var CACHE_NAME = '2022-04-22 08:25';
 var urlsToCache = [
   "/sentency/",
   "/sentency/index.js",
@@ -8,7 +8,7 @@ var urlsToCache = [
   "/sentency/mp3/end.mp3",
   "/sentency/mp3/keyboard.mp3",
   "/sentency/index.js",
-  "/sentency/favicon/original.svg",
+  "/sentency/favicon/favicon.svg",
   "https://marmooo.github.io/fonts/textar-light.woff2",
   "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css",
 ];
