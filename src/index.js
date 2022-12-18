@@ -340,6 +340,7 @@ function selectable() {
 
 function countdown() {
   wordsCount = problemCount = errorCount = 0;
+  startButton.disabled = true;
   countPanel.classList.remove("d-none");
   playPanel.classList.add("d-none");
   scorePanel.classList.add("d-none");
@@ -356,6 +357,7 @@ function countdown() {
       counter.textContent = t;
     } else {
       clearInterval(timer);
+      startButton.disabled = false;
       countPanel.classList.add("d-none");
       playPanel.classList.remove("d-none");
       selectable();
