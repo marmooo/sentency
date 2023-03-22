@@ -1,10 +1,10 @@
-var CACHE_NAME = "2023-03-15 00:10";
+var CACHE_NAME = "2023-03-22 09:35";
 var urlsToCache = [
   "/sentency/",
   "/sentency/index.js",
   "/sentency/mp3/bgm.mp3",
   "/sentency/mp3/cat.mp3",
-  "/sentency/mp3/correct.mp3",
+  "/sentency/mp3/correct3.mp3",
   "/sentency/mp3/end.mp3",
   "/sentency/mp3/keyboard.mp3",
   "/sentency/index.js",
