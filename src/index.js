@@ -19,13 +19,14 @@ let problemCount = 0;
 let errorCount = 0;
 let mistaken = false;
 let problems = [];
-let englishVoices = [];
 const audioContext = new AudioContext();
 const audioBufferCache = {};
 loadAudio("end", "mp3/end.mp3");
 loadAudio("keyboard", "mp3/keyboard.mp3");
 loadAudio("correct", "mp3/correct3.mp3");
 loadAudio("incorrect", "mp3/cat.mp3");
+let englishVoices = [];
+loadVoices();
 loadConfig();
 
 function loadConfig() {
@@ -147,7 +148,6 @@ function loadVoices() {
       .filter((voice) => !jokeVoices.includes(voice.voiceURI));
   });
 }
-loadVoices();
 
 function loopVoice(text, n) {
   speechSynthesis.cancel();
