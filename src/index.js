@@ -266,7 +266,7 @@ function selectableWordClickEvent(event) {
 }
 
 function initSelectableWord() {
-  const span = document.createElement("btn");
+  const span = document.createElement("button");
   span.className = "btn btn-light btn-lg m-1 px-2 choice";
   return span;
 }
