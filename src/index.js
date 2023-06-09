@@ -431,8 +431,6 @@ function changeMode(event) {
   }
 }
 
-setChoices(romaNode.textContent, choices);
-
 mode.onclick = changeMode;
 document.getElementById("toggleDarkMode").onclick = toggleDarkMode;
 document.getElementById("toggleBGM").onclick = toggleBGM;
