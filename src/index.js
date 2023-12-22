@@ -178,7 +178,7 @@ function loadProblems() {
 }
 
 function nextProblem() {
-  playAudio("correct");
+  playAudio("correct", 0.3);
   wordsCount = 0;
   problemCount += 1;
   if (mistaken) {
@@ -258,7 +258,7 @@ function selectableWordClickEvent(event) {
         nextProblem();
       } else {
         mistaken = true;
-        playAudio("incorrect");
+        playAudio("incorrect", 0.3);
       }
     } else {
       playAudio("keyboard");
