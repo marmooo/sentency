@@ -20,7 +20,7 @@ let problemCount = 0;
 let errorCount = 0;
 let mistaken = false;
 let problems = [];
-const audioContext = new globalThis.AudioContext();
+const audioContext = createAudioContext();
 const audioBufferCache = {};
 loadAudio("end", "mp3/end.mp3");
 loadAudio("keyboard", "mp3/keyboard.mp3");
@@ -31,66 +31,90 @@ loadVoices();
 loadConfig();
 
 function loadConfig() {
-  if (localStorage.getItem("darkMode") == 1) {
+  if (localStorage.getItem("darkMode") === "1") {
     document.documentElement.setAttribute("data-bs-theme", "dark");
   }
-  if (localStorage.getItem("bgm") != 1) {
+  if (localStorage.getItem("bgm") === "0") {
     document.getElementById("bgmOn").classList.add("d-none");
     document.getElementById("bgmOff").classList.remove("d-none");
   }
 }
 
 function toggleDarkMode() {
-  if (localStorage.getItem("darkMode") == 1) {
-    localStorage.setItem("darkMode", 0);
+  if (localStorage.getItem("darkMode") === "1") {
+    localStorage.setItem("darkMode", "0");
     document.documentElement.setAttribute("data-bs-theme", "light");
   } else {
-    localStorage.setItem("darkMode", 1);
+    localStorage.setItem("darkMode", "1");
     document.documentElement.setAttribute("data-bs-theme", "dark");
   }
 }
 
 function toggleBGM() {
-  if (localStorage.getItem("bgm") == 1) {
+  if (localStorage.getItem("bgm") !== "0") {
     document.getElementById("bgmOn").classList.add("d-none");
     document.getElementById("bgmOff").classList.remove("d-none");
-    localStorage.setItem("bgm", 0);
+    localStorage.setItem("bgm", "0");
     bgm.pause();
   } else {
     document.getElementById("bgmOn").classList.remove("d-none");
     document.getElementById("bgmOff").classList.add("d-none");
-    localStorage.setItem("bgm", 1);
+    localStorage.setItem("bgm", "1");
     bgm.play();
   }
 }
 
-async function playAudio(name, volume) {
-  const audioBuffer = await loadAudio(name, audioBufferCache[name]);
-  const sourceNode = audioContext.createBufferSource();
-  sourceNode.buffer = audioBuffer;
-  if (volume) {
-    const gainNode = audioContext.createGain();
-    gainNode.gain.value = volume;
-    gainNode.connect(audioContext.destination);
-    sourceNode.connect(gainNode);
-    sourceNode.start();
+function createAudioContext() {
+  if (globalThis.AudioContext) {
+    return new globalThis.AudioContext();
   } else {
-    sourceNode.connect(audioContext.destination);
-    sourceNode.start();
+    console.error("Web Audio API is not supported in this browser");
+    return null;
   }
 }
 
-async function loadAudio(name, url) {
-  if (audioBufferCache[name]) return audioBufferCache[name];
-  const response = await fetch(url);
-  const arrayBuffer = await response.arrayBuffer();
-  const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-  audioBufferCache[name] = audioBuffer;
-  return audioBuffer;
+function unlockAudio() {
+  if (audioContext !== null) audioContext.resume();
+  document.removeEventListener("pointerdown", unlockAudio);
+  document.removeEventListener("touchstart", unlockAudio);
+  document.removeEventListener("keydown", unlockAudio);
 }
 
-function unlockAudio() {
-  audioContext.resume();
+function initUnlockAudio() {
+  document.addEventListener("pointerdown", unlockAudio, { once: true });
+  document.addEventListener("touchstart", unlockAudio, { once: true });
+  document.addEventListener("keydown", unlockAudio, { once: true });
+}
+
+async function loadAudio(name, url) {
+  if (audioContext === null) return;
+  if (audioBufferCache[name]) return audioBufferCache[name];
+  try {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+    audioBufferCache[name] = audioBuffer;
+    return audioBuffer;
+  } catch (error) {
+    console.error(`Loading audio ${name} error:`, error);
+    throw error;
+  }
+}
+
+function playAudio(name, volume) {
+  if (audioContext === null) return;
+  const audioBuffer = audioBufferCache[name];
+  if (!audioBuffer) {
+    console.error(`Audio ${name} is not found in cache`);
+    return;
+  }
+  const sourceNode = audioContext.createBufferSource();
+  sourceNode.buffer = audioBuffer;
+  const gainNode = audioContext.createGain();
+  if (volume) gainNode.gain.value = volume;
+  gainNode.connect(audioContext.destination);
+  sourceNode.connect(gainNode);
+  sourceNode.start();
 }
 
 function loadVoices() {
@@ -357,6 +381,7 @@ function selectable() {
 
 function countdown() {
   wordsCount = problemCount = errorCount = 0;
+  if (localStorage.getItem("bgm") == 1) bgm.play();
   countPanel.classList.remove("d-none");
   playPanel.classList.add("d-none");
   infoPanel.classList.add("d-none");
@@ -379,9 +404,6 @@ function countdown() {
       playPanel.classList.remove("d-none");
       selectable();
       startGameTimer();
-      if (localStorage.getItem("bgm") == 1) {
-        bgm.play();
-      }
     }
   }, 1000);
 }
@@ -444,7 +466,4 @@ gradeOption.addEventListener("change", () => {
   initTime();
   clearInterval(gameTimer);
 });
-document.addEventListener("click", unlockAudio, {
-  once: true,
-  useCapture: true,
-});
+initUnlockAudio();
