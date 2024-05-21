@@ -20,12 +20,8 @@ let problemCount = 0;
 let errorCount = 0;
 let mistaken = false;
 let problems = [];
-const audioContext = createAudioContext();
+let audioContext;
 const audioBufferCache = {};
-loadAudio("end", "mp3/end.mp3");
-loadAudio("keyboard", "mp3/keyboard.mp3");
-loadAudio("correct", "mp3/correct3.mp3");
-loadAudio("incorrect", "mp3/cat.mp3");
 let englishVoices = [];
 loadVoices();
 loadConfig();
@@ -74,20 +70,21 @@ function createAudioContext() {
 }
 
 function unlockAudio() {
-  if (audioContext !== null) audioContext.resume();
+  if (audioContext) {
+    audioContext.resume();
+  } else {
+    audioContext = createAudioContext();
+    loadAudio("end", "mp3/end.mp3");
+    loadAudio("keyboard", "mp3/keyboard.mp3");
+    loadAudio("correct", "mp3/correct3.mp3");
+    loadAudio("incorrect", "mp3/cat.mp3");
+  }
   document.removeEventListener("pointerdown", unlockAudio);
-  document.removeEventListener("touchstart", unlockAudio);
   document.removeEventListener("keydown", unlockAudio);
 }
 
-function initUnlockAudio() {
-  document.addEventListener("pointerdown", unlockAudio, { once: true });
-  document.addEventListener("touchstart", unlockAudio, { once: true });
-  document.addEventListener("keydown", unlockAudio, { once: true });
-}
-
 async function loadAudio(name, url) {
-  if (audioContext === null) return;
+  if (!audioContext) return;
   if (audioBufferCache[name]) return audioBufferCache[name];
   try {
     const response = await fetch(url);
@@ -102,7 +99,7 @@ async function loadAudio(name, url) {
 }
 
 function playAudio(name, volume) {
-  if (audioContext === null) return;
+  if (!audioContext) return;
   const audioBuffer = audioBufferCache[name];
   if (!audioBuffer) {
     console.error(`Audio ${name} is not found in cache`);
@@ -466,4 +463,5 @@ gradeOption.addEventListener("change", () => {
   initTime();
   clearInterval(gameTimer);
 });
-initUnlockAudio();
+document.addEventListener("pointerdown", unlockAudio, { once: true });
+document.addEventListener("keydown", unlockAudio, { once: true });
