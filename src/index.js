@@ -446,8 +446,10 @@ function showAnswer() {
 function changeMode(event) {
   if (event.target.textContent == "EASY") {
     event.target.textContent = "HARD";
+    document.getElementById("voice").disabled = true;
   } else {
     event.target.textContent = "EASY";
+    document.getElementById("voice").disabled = false;
   }
 }
 
