@@ -181,20 +181,17 @@ function loopVoice(text, n) {
   }
 }
 
-function loadProblems() {
+async function loadProblems() {
   const grade = gradeOption.selectedIndex + 2;
   if (grade > 0) {
-    fetch("data/" + mode.textContent.toLowerCase() + "/" + grade + ".tsv")
-      .then((response) => response.text())
-      .then((tsv) => {
-        problems = tsv.trim().split("\n").map((line) => {
-          const [en, jaStr] = line.split("\t");
-          const ja = jaStr.split("|").slice(0, 3).join("\n");
-          return { en: en, ja: ja };
-        });
-      }).catch((err) => {
-        console.error(err);
-      });
+    const url = "data/" + mode.textContent.toLowerCase() + "/" + grade + ".tsv";
+    const response = await fetch(url);
+    const tsv = await response.text();
+    problems = tsv.trim().split("\n").map((line) => {
+      const [en, jaStr] = line.split("\t");
+      const ja = jaStr.split("|").slice(0, 3).join("\n");
+      return { en: en, ja: ja };
+    });
   }
 }
 
@@ -405,10 +402,10 @@ function countdown() {
   }, 1000);
 }
 
-function startGame() {
+async function startGame() {
   clearInterval(gameTimer);
   initTime();
-  loadProblems();
+  await loadProblems();
   countdown();
 }
 
