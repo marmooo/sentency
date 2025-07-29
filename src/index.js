@@ -70,10 +70,6 @@ function createAudioContext() {
 }
 
 function unlockAudio() {
-  const uttr = new SpeechSynthesisUtterance("");
-  uttr.lang = "en-US";
-  speechSynthesis.speak(uttr);
-
   if (audioContext) {
     audioContext.resume();
   } else {
@@ -377,6 +373,7 @@ function selectable() {
 }
 
 function countdown() {
+  loopVoice("Ready", 1); // unlock
   wordsCount = problemCount = errorCount = 0;
   if (localStorage.getItem("bgm") == 1) bgm.play();
   countPanel.classList.remove("d-none");
@@ -405,10 +402,9 @@ function countdown() {
   }, 1000);
 }
 
-async function startGame() {
+function startGame() {
   clearInterval(gameTimer);
   initTime();
-  await loadProblems();
   countdown();
 }
 
@@ -443,7 +439,7 @@ function showAnswer() {
   mistaken = true;
 }
 
-function changeMode(event) {
+async function changeMode(event) {
   if (event.target.textContent == "EASY") {
     event.target.textContent = "HARD";
     document.getElementById("voice").disabled = true;
@@ -451,7 +447,10 @@ function changeMode(event) {
     event.target.textContent = "EASY";
     document.getElementById("voice").disabled = false;
   }
+  await loadProblems();
 }
+
+await loadProblems();
 
 mode.onclick = changeMode;
 document.getElementById("toggleDarkMode").onclick = toggleDarkMode;
@@ -461,9 +460,10 @@ document.getElementById("answerButton").onclick = showAnswer;
 document.getElementById("voice").onclick = () => {
   loopVoice(answer.textContent, 1);
 };
-gradeOption.addEventListener("change", () => {
+gradeOption.addEventListener("change", async () => {
   initTime();
   clearInterval(gameTimer);
+  await loadProblems();
 });
 document.addEventListener("click", unlockAudio, { once: true });
 document.addEventListener("keydown", unlockAudio, { once: true });
